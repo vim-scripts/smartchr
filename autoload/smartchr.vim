@@ -1,5 +1,5 @@
 " smartchr - Insert several candidates with a single key
-" Version: 0.0.0
+" Version: 0.0.1
 " Copyright (C) 2008 kana <http://whileimautomaton.net/>
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -21,8 +21,15 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Interface  "{{{1
-function! smartchr#one_of(...)  "{{{2
+
+
+
+
+function! smartchr#loop(...)
+  return call('smartchr#one_of', a:000 + [(a:1)])
+endfunction
+
+function! smartchr#one_of(...)
   " Support function to insert one of the given arguments like
   " ess-smart-underscore of Emacs Speaks Statistics.
   "
@@ -56,9 +63,5 @@ endfunction
 
 
 
-
-
-
-
-" __END__  "{{{1
+" __END__
 " vim: foldmethod=marker

@@ -1,6 +1,6 @@
 *smartchr.txt*	Insert several candidates with a single key
 
-Version 0.0.0
+Version 0.0.1
 Copyright (C) 2008 kana <http://whileimautomaton.net/>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,6 +23,8 @@ License: MIT license  {{{
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 }}}
 
+CONTENTS					*smartchr-contents*
+
 Introduction		|smartchr-introduction|
 Interface		|smartchr-interface|
   Functions		  |smartchr-functions|
@@ -35,14 +37,15 @@ Changelog		|smartchr-changelog|
 ==============================================================================
 INTRODUCTION					*smartchr-introduction*
 
-Smartchr is a Vim plugin to support input several candidates with a single
+*smartchr* is a Vim plugin to support input several candidates with a single
 key, like ess-smart-underscore in Emacs Speaks Statistics -- when user types
 "_" key, it inserts " <- " for the first time or it replaces " <- " by "_" for
 the second time.  This plugin provides a function to support to define such
 key bindings.
 
+
 Requirements:
-- Vim 7.1 or later.
+- Vim 7.1 or later
 
 
 
@@ -53,6 +56,21 @@ INTERFACE					*smartchr-interface*
 ------------------------------------------------------------------------------
 FUNCTIONS					*smartchr-functions*
 
+						*smartchr#loop()*
+smartchr#loop(...)
+	Same as |smartchr#one_of()|, but it returns the key sequence to
+	replace the {N}th argument by the 1st argument for the {N+1}th time.
+	For example,
+>
+		inoremap <expr> _  smartchr#loop(' <- ', '_')
+<
+	With the above setting, whenever user types "_" key:
+	- " <- " is inserted for the 1st time, or
+	- the previously inserted " <- " is removed then "_" is inserted for
+	  the 2nd time, or
+	- the previously inserted "_" is removed then " <- " is inserted for
+	  the 3rd time, and so forth.
+
 						*smartchr#one_of()*
 smartchr#one_of(...)
 	Returns a string which represents the key sequence to insert one of
@@ -61,9 +79,10 @@ smartchr#one_of(...)
 >
 		inoremap <expr> _  smartchr#one_of(' <- ', '_')
 <
-	With the above setting, when user types "_" key, " <- " is inserted
-	for the first time.  When user types "_" key again, the previously
-	inserted " <- " is removed, then "_" is inserted.
+	With the above setting, whenever user types "_" key:
+	- " <- " is inserted for the 1st time, or
+	- the previously inserted " <- " is removed then "_" is inserted for
+	  the 2nd time.
 
 	More generally, this function returns the key sequence to:
 	- insert the 1st argument for the 1st time, or
@@ -85,6 +104,9 @@ BUGS						*smartchr-bugs*
 
 ==============================================================================
 CHANGELOG					*smartchr-changelog*
+
+0.0.1	2008-08-28T12:39:07+09:00
+	- Add |smartchr#loop()|.
 
 0.0.0	2008-07-11T11:55:47+09:00
 	- Initial version.
